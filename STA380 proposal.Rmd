@@ -15,7 +15,7 @@ header-includes:
 
 # 1. Project Topic
 
-Bootstrap Estimation of Sleep Duration Differences by Depression Status[@marqueze2015natural].
+Bootstrap Estimation of Sleep Duration Differences by Depression Status
 
 # 2. Simulation vs. Dataset
 
@@ -25,18 +25,35 @@ The project will use a healthcare dataset.
 
 We will use bootstrap resampling method to estimate the sampling distribution of sleep duration statistics in a healthcare dataset.
 
-The study will focus on comparing sleep duration between individuals with depression and those without depression. We will apply bootstrap resampling with replacement within each group seperately to estimate uncertainty in summary statistics.
+The study will focus on comparing sleep duration between individuals with depression and those without depression. We will apply bootstrap resampling with replacement within each group seperately to estimate uncertainty in summary statistics[@marqueze2015natural].
 
 The following outputs will be provided:
 
 - Boostrap sampling distribution of mean sleep duration
 - Boostrap sampling distribution of median sleep duration
 - Bootstrap confidence intervals for both mean and median
+- Reference lines for both mean and median
 - Visualizations of bootstrap distribution using histograms
 
 # 4. User Inputs (Shiny Components)
 
+Users will be able to modify the following:
+
+1. Setting the seed.
+2. Select the data presented: 
+- Mean sleep duration
+- Median sleep duration
+- Summary statistic of bootstrap estimates
+- Bootstrap confidence interval
+- Visualizing the distribution with histogram
+3. Modify the Confidence Interval with different confidence level.(e.g. 90%, 95%, 99%.)
+4. Customizing the plot such as the color.
+5. Download the plot if required. 
+
+# Generative AI Use
+This proposal did not use generative AI tools.
 
 # References
 \nocite{*}
+
 
