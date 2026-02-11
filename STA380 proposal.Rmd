@@ -35,10 +35,21 @@ The following outputs will be provided:
 - Reference lines for both mean and median
 - Visualizations of bootstrap distribution using histograms
 
-
+# 4. User Inputs (Shiny Components)
+Users will be able to modify the following inputs in the R Shiny App:
+1. Setting the seed.
+2. Select the data presented: 
+    1) Mean sleep duration.
+    2) Median sleep duration.
+    3) Summary statistic of bootstrap estimates. 
+    3) Bootstrap confidence interval
+    4) Visualizing the distribution with histogram
+3. Modify the Confidence Interval with different confidence level. (e.g. 90%, 95%, 99%.)
+4. Customizing the plot such as the color.
+5. Download the plot if required. 
 
 # Generative AI Use
-
+This proposal did not use any generative AI. 
 
 # References
 \nocite{*}
