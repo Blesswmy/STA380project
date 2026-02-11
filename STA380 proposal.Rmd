@@ -13,10 +13,9 @@ header-includes:
   - \usepackage{xcolor}
 ---
 
-
 # 1. Project Topic
 
-Bootstrap Estimation of Sleep Duration Differences by Depression Status[@marqueze2015natural]
+Bootstrap Estimation of Sleep Duration Differences by Depression Status[@marqueze2015natural].
 
 # 2. Simulation vs. Dataset
 
