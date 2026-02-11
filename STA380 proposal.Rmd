@@ -36,7 +36,9 @@ The following outputs will be provided:
 - Visualizations of bootstrap distribution using histograms
 
 # 4. User Inputs (Shiny Components)
+
 Users will be able to modify the following inputs in the R Shiny App:
+
 1. Setting the seed.
 2. Select the data presented: 
 - Mean sleep duration.
@@ -49,6 +51,7 @@ Users will be able to modify the following inputs in the R Shiny App:
 5. Download the plot if required. 
 
 # Generative AI Use
+
 This proposal did not use any generative AI. 
 
 # References
