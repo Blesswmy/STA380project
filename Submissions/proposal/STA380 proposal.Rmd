@@ -15,11 +15,11 @@ header-includes:
 
 # 1. Project Topic
 
-
+Bootstrap Estimation of Sleep Duration Differences by Depression Status
 
 # 2. Simulation vs. Dataset
 
-
+The project will use a healthcare dataset.
 
 # 3. Project Details
 
