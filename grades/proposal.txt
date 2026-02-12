@@ -1,0 +1,19 @@
+not many references; in the instructions, I mentioned explicitly (-0.05):
+
+Since you will be using R Shiny, begin with citing R and Shiny.
+
+If you know in advance which R packages you’ll use, include their citations (citation("packageName") in R).
+
+(see: https://annahuynhly.github.io/sta380/pages/project/proposal.html)
+
+Instead of calling it some 'healthcare dataset', you probably should explicitly reference what you had in the bibliography and describe that instead. This is because it would have been useful for you to refer to the variables of that particular source, making your proposal more clear.
+
+"The study will focus on comparing sleep duration between individuals with depression and those without depression."
+-> actually, if you want to have this "focus", a permutation test would be better than the bootstrap. However, you can still use the bootstrap to get a bootstrapped sample of the mean differences between the two groups (and thus constructing a confidence interval and see if 0 is part of said interval).
+
+Actually, you even mention the confidence interval in the user input but it is not exactly clear if you're talking about the individual means or the difference. I'd say if you are again focusing on the differences, then that matters a lot. (-0.1 due to vagueness)
+
+0.85/1
+
+I am planning to apply bonus marks after the "Basic Implementation Check" checkpoint, because some students might be switching groups/topics/opting out. I have set a reminder to do this.
+
