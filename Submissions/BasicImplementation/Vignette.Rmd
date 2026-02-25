@@ -71,7 +71,7 @@ hist(boot_means_sleep,
 
 # Percentile bootstrap confidence interval
 
-Compute lower and upper bound of the 95% percentile bootstrap confidence interval. 
+Compute the lower and upper bound of the 95% percentile bootstrap confidence interval. 
 
 ```{r}
 cl95_sleep <- bootstrap_ci(boot_means_sleep, conf_level = 0.95)
@@ -82,7 +82,8 @@ cl95_sleep
 
 
 
-
+# AI usage
+1. https://chatgpt.com/share/699e88bf-3d1c-8003-ac39-9186bb8e1d24
 
 
 
