@@ -1,0 +1,93 @@
+---
+title: "Bootstrap Vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  bibliography: bibliography.bib
+nocite: "@*"
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+knitr::opts_chunk$set(fig.width=7, fig.height=6)
+```
+
+```{r}
+source("bootstrap.R")
+```
+
+This vignette demonstrates three functions for sleep duration statistics with the bootstrap resampling method:
+
+-   compute_sleep_duration(): Compute sleep duration as the difference between wake time and bedtime.
+
+-   bootstrap_mean(): Generate bootstrap estimates of the sample mean using resampling with replacement.
+
+-  bootstrap_ci() Compute a percentile bootstrap confidence interval.
+
+# Compute sleep duration
+
+In this example, bedtimes and wake times are recorded on a 24-hour clock.
+If wake time is smaller than bedtime, the function assumes sleep crosses midnight and adjusts accordingly.
+
+```{r}
+set.seed(1)
+n <- 10^4
+uptime  <- c( 7.0, 6.0, 9.0, 7.5, 6.0)
+bedtime <- c(22.0, 22.5, 1.0, 0.0, 0.5)
+sleep_hours <- compute_sleep_duration(bedtime, uptime)
+sleep_hours
+summary(sleep_hours)
+```
+
+
+# Bootstrap mean of sleep duration
+
+we apply the bootstrap to estimate the mean sleep duration of the sampling distribution.
+
+```{r}
+set.seed(1)
+B <- 10^4
+boot_means_sleep <- bootstrap_mean(sleep_hours, B = B)
+head(boot_means_sleep)
+length(boot_means_sleep)
+```
+
+## Histtogram 
+
+Visualizing the bootstrap of mean sleep duration
+
+```{r}
+hist(boot_means_sleep,
+     main = "Bootstrap distribution of mean sleep duration",
+     xlab = "Bootstrap means(hours)")
+```
+
+
+# Percentile bootstrap confidence interval
+
+Compute lower and upper bound of the 95% percentile bootstrap confidence interval. 
+
+```{r}
+cl95_sleep <- bootstrap_ci(boot_means_sleep, conf_level = 0.95)
+cl95_sleep
+```
+
+# Bibliography
+
+
+
+
+
+
+
+
+
+
+
+
