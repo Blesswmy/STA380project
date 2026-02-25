@@ -88,26 +88,6 @@ hist(boot_median_sleep,
      xlab = "Bootstrap median(hours)")
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Percentile bootstrap confidence interval
 
 Compute the lower and upper bound of the 95% percentile bootstrap confidence interval.
