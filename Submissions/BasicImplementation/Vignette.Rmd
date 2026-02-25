@@ -28,12 +28,11 @@ This vignette demonstrates three functions for sleep duration statistics with th
 
 -   bootstrap_mean(): Generate bootstrap estimates of the sample mean using resampling with replacement.
 
--  bootstrap_ci() Compute a percentile bootstrap confidence interval.
+-   bootstrap_ci() Compute a percentile bootstrap confidence interval.
 
 # Compute sleep duration
 
-In this example, bedtimes and wake times are recorded on a 24-hour clock.
-If wake time is smaller than bedtime, the function assumes sleep crosses midnight and adjusts accordingly.
+In this example, bedtimes and wake times are recorded on a 24-hour clock. If wake time is smaller than bedtime, the function assumes sleep crosses midnight and adjusts accordingly.
 
 ```{r}
 set.seed(1)
@@ -44,7 +43,6 @@ sleep_hours <- compute_sleep_duration(bedtime, uptime)
 sleep_hours
 summary(sleep_hours)
 ```
-
 
 # Bootstrap mean of sleep duration
 
@@ -58,7 +56,7 @@ head(boot_means_sleep)
 length(boot_means_sleep)
 ```
 
-## Histtogram 
+## Histogram
 
 Visualizing the bootstrap of mean sleep duration
 
@@ -68,27 +66,65 @@ hist(boot_means_sleep,
      xlab = "Bootstrap means(hours)")
 ```
 
-
 # Percentile bootstrap confidence interval
 
-Compute the lower and upper bound of the 95% percentile bootstrap confidence interval. 
+Compute the lower and upper bound of the 95% percentile bootstrap confidence interval.
 
 ```{r}
 cl95_sleep <- bootstrap_ci(boot_means_sleep, conf_level = 0.95)
 cl95_sleep
 ```
 
+# Assumption checks
+
+In this bootstrap, we do not need to check normality, but it needs the following assumptions:
+
+-   Independence: Observations of sleep duration should be independent.
+-   Representative: Observations should come from the target population.
+-   Sample size: Sample size n should be big enough to make bootstrap_ci() stable.
+-   Outliers: Outliers will effect the bootstrap_mean() and bootstrap_ci().
+
+# Checking sample size
+
+```{r}
+sleep_sample <- sleep_hours[!is.na(sleep_hours)]
+n <- length(sleep_sample)
+if (n < 10) {
+  warning("Sample size n is too small!")
+}
+```
+
+# Checking outliers
+
+```{r}
+sleep_sample <- sleep_hours[!is.na(sleep_hours)]
+Q1 <- quantile(sleep_sample, 0.25)
+Q3 <- quantile(sleep_sample, 0.75)
+IQR <- IQR(sleep_sample)
+lower_tail <- Q1 - 1.5 * IQR
+upper_tail <- Q3 + 1.5 * IQR
+
+boxplot(sleep_sample,
+        main = "Boxplot of sleep duration",
+        ylab = "Sleep duration(hours)")
+```
+
 # Bibliography
 
-
+``` bibtex
+@article{marqueze2015natural,
+  title = {Natural Light Exposure, Sleep and Depression among Day Workers and Shiftworkers at Arctic and Equatorial Latitudes},
+  author = {Marqueze, Elaine Cristina and Vasconcelos, Suleima and Garefelt, Johanna and Skene, Debra J. and Moreno, Claudia Roberta and Lowden, Arne},
+  journal = {PLOS ONE},
+  volume = {10},
+  number = {4},
+  pages = {e0122078},
+  year = {2015},
+  doi = {10.1371/journal.pone.0122078},
+  url = {https://doi.org/10.1371/journal.pone.0122078}
+}
+```
 
 # AI usage
-1. https://chatgpt.com/share/699e88bf-3d1c-8003-ac39-9186bb8e1d24
 
-
-
-
-
-
-
-
+1.  <https://chatgpt.com/share/699e88bf-3d1c-8003-ac39-9186bb8e1d24>
