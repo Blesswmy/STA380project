@@ -66,6 +66,48 @@ hist(boot_means_sleep,
      xlab = "Bootstrap means(hours)")
 ```
 
+# Bootstrap Median Estimator
+
+We apply the bootstrap to estimate the median sleep duration of the sampling distribution. 
+
+```{r}
+set.seed(1)
+B <- 10^4
+boot_median_sleep <- bootstrap_median(sleep_hours, B = B)
+head(boot_median_sleep)
+length(boot_median_sleep)
+```
+
+## histogram
+
+Visualizing the bootstrap of mean sleep duration.
+
+```{r}
+hist(boot_median_sleep,
+     main = "Bootstrap distribution of median sleep duration",
+     xlab = "Bootstrap median(hours)")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Percentile bootstrap confidence interval
 
 Compute the lower and upper bound of the 95% percentile bootstrap confidence interval.
