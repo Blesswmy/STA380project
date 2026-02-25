@@ -1,5 +1,5 @@
 library(testthat)
-source("bootstrap_sleep.R")
+source("bootstrap.R")
 
 test_that("sleep duration basic case works", {
   expect_equal(compute_sleep_duration(22, 30), 8)
