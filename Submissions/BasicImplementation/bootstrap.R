@@ -46,6 +46,32 @@ bootstrap_mean <- function(x, B = 1000) {
 }
 
 
+#' Bootstrap median estimator
+#'
+#' Generate bootstrap estimates of the sample median using resampling
+#' with replacement.
+#'
+#' @param x Numeric vector.
+#' @param B Number of bootstrap samples. Default is 1000.
+#'
+#' @return Numeric vector containing B bootstrap median estimates.
+#' @export
+bootstrap_median <- function(x, B = 1000) {
+  
+  x <- x[!is.na(x)]
+  n <- length(x)
+  
+  boot_medians <- numeric(B)
+  
+  for (b in seq_len(B)) {
+    sample_x <- sample(x, n, replace = TRUE)
+    boot_medians[b] <- median(sample_x)
+  }
+  
+  boot_medians
+}
+
+
 #' Bootstrap confidence interval
 #'
 #' Compute a percentile bootstrap confidence interval.

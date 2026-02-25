@@ -16,6 +16,13 @@ test_that("bootstrap_mean returns correct length", {
   expect_equal(length(boot), 200)
 })
 
+test_that("bootstrap_median returns correct length", {
+  set.seed(380)
+  x <- c(1,2,3,4,5)
+  boot <- bootstrap_median(x, B = 200)
+  expect_equal(length(boot), 200)
+})
+
 test_that("bootstrap_ci returns two values", {
   set.seed(380)
   x <- rnorm(100)
