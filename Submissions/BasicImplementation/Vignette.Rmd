@@ -5,7 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Example Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  bibliography: bibliography.bib
+bibliography: bibliography.bib
 nocite: "@*"
 ---
 
@@ -195,19 +195,8 @@ boxplot(sleep_sample,
 
 # Bibliography
 
-``` bibtex
-@article{marqueze2015natural,
-  title = {Natural Light Exposure, Sleep and Depression among Day Workers and Shiftworkers at Arctic and Equatorial Latitudes},
-  author = {Marqueze, Elaine Cristina and Vasconcelos, Suleima and Garefelt, Johanna and Skene, Debra J. and Moreno, Claudia Roberta and Lowden, Arne},
-  journal = {PLOS ONE},
-  volume = {10},
-  number = {4},
-  pages = {e0122078},
-  year = {2015},
-  doi = {10.1371/journal.pone.0122078},
-  url = {https://doi.org/10.1371/journal.pone.0122078}
-}
-```
+::: {#refs}
+:::
 
 # AI usage
 

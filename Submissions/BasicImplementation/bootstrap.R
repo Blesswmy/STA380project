@@ -30,10 +30,15 @@ compute_sleep_duration <- function(bedtime, uptime) {
 #'
 #' @return A numeric vector containing B bootstrap mean estimates.
 #' @export
-bootstrap_mean <- function(x, B = 1000) {
+bootstrap_mean <- function(x, B = 1000, n = NULL) {
   
   x <- x[!is.na(x)]
-  n <- length(x)
+  ## Anna: added support where the user can specify the bootstrap sample size.
+  ## you will need to document this yourself 
+  ## (and please add to other functions.)
+  if(is.null(n)){
+    n <- length(x)
+  }
   
   boot_means <- numeric(B)
   

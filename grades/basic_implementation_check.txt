@@ -1,0 +1,27 @@
+vignette:
+
+I noticed that you did not actually use the sleep dataset.
+
+Although technically that is not exactly specified, it would have been better if you did that instead of using 
+a very simple vector because for the final website implementation you need to do it anyways, and thus,
+you have now delegated a lot of future tasks for the 5th checkpoint.
+
+bibtex references were not done properly; I edited it for you.
+
+for referencing AI use: I do appreciate the conversation list. However, in addition if you could briefly mention what it was used for, 
+that would be appreciated.
+
+bootstrap.R:
+
+1. I added some lines of code; in particular, instead of
+n <- length(x)
+
+you should add support where someone can determine the bootstrapped sample size.
+
+You will need to document this yourself and add this support to other functions.
+
+2. technically, you should add @example in the roxygen comments.
+these are useful for when someone wants to run an example in your package.
+
+2/2
+
