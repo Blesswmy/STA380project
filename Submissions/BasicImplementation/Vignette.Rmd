@@ -66,6 +66,37 @@ hist(boot_means_sleep,
      xlab = "Bootstrap means(hours)")
 ```
 
+## Bootstrap summary statistics (Mean)
+
+```{r}
+original_mean <- mean(sleep_hours)
+
+boot_mean <- mean(boot_means_sleep)
+boot_se <- sd(boot_means_sleep)
+boot_bias <- boot_mean - original_mean
+boot_median <- median(boot_means_sleep)
+boot_ci <- quantile(boot_means_sleep, c(0.025, 0.975))
+
+mean_summary <- data.frame(
+  Metric = c("Original estimate",
+             "Bootstrap mean",
+             "Bootstrap SE",
+             "Bias",
+             "Bootstrap median",
+             "95% CI (2.5%)",
+             "95% CI (97.5%)"),
+  Value = c(original_mean,
+            boot_mean,
+            boot_se,
+            boot_bias,
+            boot_median,
+            boot_ci[1],
+            boot_ci[2])
+)
+
+mean_summary
+```
+
 # Bootstrap Median Estimator
 
 We apply the bootstrap to estimate the median sleep duration of the sampling distribution. 
@@ -86,6 +117,37 @@ Visualizing the bootstrap of mean sleep duration.
 hist(boot_median_sleep,
      main = "Bootstrap distribution of median sleep duration",
      xlab = "Bootstrap median(hours)")
+```
+
+## Bootstrap summary statistics (Median)
+
+```{r}
+original_median <- median(sleep_hours)
+
+boot_mean_med <- mean(boot_median_sleep)
+boot_se_med <- sd(boot_median_sleep)
+boot_bias_med <- boot_mean_med - original_median
+boot_median_med <- median(boot_median_sleep)
+boot_ci_med <- quantile(boot_median_sleep, c(0.025, 0.975))
+
+median_summary <- data.frame(
+  Metric = c("Original estimate",
+             "Bootstrap mean",
+             "Bootstrap SE",
+             "Bias",
+             "Bootstrap median",
+             "95% CI (2.5%)",
+             "95% CI (97.5%)"),
+  Value = c(original_median,
+            boot_mean_med,
+            boot_se_med,
+            boot_bias_med,
+            boot_median_med,
+            boot_ci_med[1],
+            boot_ci_med[2])
+)
+
+median_summary
 ```
 
 # Percentile bootstrap confidence interval
