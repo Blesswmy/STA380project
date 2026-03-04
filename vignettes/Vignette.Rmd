@@ -1,6 +1,6 @@
 ---
 title: "Bootstrap Vignette"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Example Vignette}
   %\VignetteEngine{knitr::rmarkdown}
