@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Bootstrap Vignette</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Bootstrap Vignette</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;bootstrap.R&quot;</span>)</span></code></pre></div>
+<p>This vignette demonstrates three functions for sleep duration
+statistics with the bootstrap resampling method:</p>
+<ul>
+<li><p>compute_sleep_duration(): Compute sleep duration as the
+difference between wake time and bedtime.</p></li>
+<li><p>bootstrap_mean(): Generate bootstrap estimates of the sample mean
+using resampling with replacement.</p></li>
+<li><p>bootstrap_ci() Compute a percentile bootstrap confidence
+interval.</p></li>
+</ul>
+<div id="compute-sleep-duration" class="section level1">
+<h1>Compute sleep duration</h1>
+<p>In this example, bedtimes and wake times are recorded on a 24-hour
+clock. If wake time is smaller than bedtime, the function assumes sleep
+crosses midnight and adjusts accordingly.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>uptime  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="fl">7.0</span>, <span class="fl">6.0</span>, <span class="fl">9.0</span>, <span class="fl">7.5</span>, <span class="fl">6.0</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>bedtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.0</span>, <span class="fl">22.5</span>, <span class="fl">1.0</span>, <span class="fl">0.0</span>, <span class="fl">0.5</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>sleep_hours <span class="ot">&lt;-</span> <span class="fu">compute_sleep_duration</span>(bedtime, uptime)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>sleep_hours</span></code></pre></div>
+<pre><code>## [1] 9.0 7.5 8.0 7.5 5.5</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(sleep_hours)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     5.5     7.5     7.5     7.5     8.0     9.0</code></pre>
+</div>
+<div id="bootstrap-mean-of-sleep-duration" class="section level1">
+<h1>Bootstrap mean of sleep duration</h1>
+<p>we apply the bootstrap to estimate the mean sleep duration of the
+sampling distribution.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>boot_means_sleep <span class="ot">&lt;-</span> <span class="fu">bootstrap_mean</span>(sleep_hours, <span class="at">B =</span> B)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">head</span>(boot_means_sleep)</span></code></pre></div>
+<pre><code>## [1] 7.7 8.1 7.0 6.9 7.4 7.9</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">length</span>(boot_means_sleep)</span></code></pre></div>
+<pre><code>## [1] 10000</code></pre>
+<div id="histogram" class="section level2">
+<h2>Histogram</h2>
+<p>Visualizing the bootstrap of mean sleep duration</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">hist</span>(boot_means_sleep,</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Bootstrap distribution of mean sleep duration&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Bootstrap means(hours)&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="bootstrap-summary-statistics-mean" class="section level2">
+<h2>Bootstrap summary statistics (Mean)</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>original_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(sleep_hours)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>boot_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(boot_means_sleep)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>boot_se <span class="ot">&lt;-</span> <span class="fu">sd</span>(boot_means_sleep)</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>boot_bias <span class="ot">&lt;-</span> boot_mean <span class="sc">-</span> original_mean</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>boot_median <span class="ot">&lt;-</span> <span class="fu">median</span>(boot_means_sleep)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_means_sleep, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>mean_summary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Original estimate&quot;</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>             <span class="st">&quot;Bootstrap mean&quot;</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>             <span class="st">&quot;Bootstrap SE&quot;</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>             <span class="st">&quot;Bias&quot;</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>             <span class="st">&quot;Bootstrap median&quot;</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>             <span class="st">&quot;95% CI (2.5%)&quot;</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>             <span class="st">&quot;95% CI (97.5%)&quot;</span>),</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(original_mean,</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>            boot_mean,</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>            boot_se,</span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>            boot_bias,</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>            boot_median,</span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>            boot_ci[<span class="dv">1</span>],</span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>            boot_ci[<span class="dv">2</span>])</span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>)</span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>mean_summary</span></code></pre></div>
+<pre><code>##              Metric     Value
+## 1 Original estimate  7.500000
+## 2    Bootstrap mean  7.494520
+## 3      Bootstrap SE  0.507326
+## 4              Bias -0.005480
+## 5  Bootstrap median  7.500000
+## 6     95% CI (2.5%)  6.400000
+## 7    95% CI (97.5%)  8.400000</code></pre>
+</div>
+</div>
+<div id="bootstrap-median-estimator" class="section level1">
+<h1>Bootstrap Median Estimator</h1>
+<p>We apply the bootstrap to estimate the median sleep duration of the
+sampling distribution.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">4</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>boot_median_sleep <span class="ot">&lt;-</span> <span class="fu">bootstrap_median</span>(sleep_hours, <span class="at">B =</span> B)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="fu">head</span>(boot_median_sleep)</span></code></pre></div>
+<pre><code>## [1] 7.5 8.0 7.5 5.5 7.5 7.5</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">length</span>(boot_median_sleep)</span></code></pre></div>
+<pre><code>## [1] 10000</code></pre>
+<div id="histogram-1" class="section level2">
+<h2>histogram</h2>
+<p>Visualizing the bootstrap of mean sleep duration.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">hist</span>(boot_median_sleep,</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Bootstrap distribution of median sleep duration&quot;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Bootstrap median(hours)&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAJACAMAAABlpiR1AAAAzFBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZpAAZrY6AAA6ADo6AGY6OgA6Ojo6OmY6OpA6ZpA6ZrY6kLY6kNtmAABmADpmOgBmOjpmkJBmkLZmkNtmtrZmtttmtv+QOgCQZgCQZjqQkGaQkLaQtpCQttuQtv+Q29uQ2/+2ZgC2Zjq2ZpC2kDq2kGa225C227a229u22/+2/7a2/9u2///T09PbkDrbkGbbtmbbtpDb27bb29vb2//b/7bb/9vb////tmb/25D/27b//7b//9v///9Fl0nHAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAYj0lEQVR4nO2dDXvrxnFGoZurSu5tmlSy2yaWajdpRKdt7OSWqdOmoizx//+nAlh8LEASLxdYckbSOc+TG4ofg8HwcLEY0thiC+CYwjoBgCkQFFyDoOAaBAXXICi4BkHBNQgKrkFQcA2CgmsQFFyDoOAaBAXXICi4BkHBNQgKrkFQcA2CgmsQFFyDoOAaBAXXICi4BkHBNQgKrkFQcA2CgmsQFFyDoOAaBAXXICi4BkHBNQgKrkFQcI0fQddF4OIXP0w97eX3n8UdglXx4fPLfXH5eDBKeLR63sEMdgNM8vLddVH8clmGE9HTkum2oQOn72l2/AlaTJbup69Gj+7codj79g+iTAtaPzXxbdtUu3WzKMMJTiXonD3NjkdBp97KncIeNRTIF+y581Dg5A1uq327eDj+2albOJWgc/Y0O54EDeV4ui6uqv//8R+L4mf/HArf3V41I+yfPzVzgeaO0oDffFV8+GH741fl3z+vbCjL+4fyZR/7CUN1oP3422h8OhDl+3YErV5fTzjCW/V8W350wlP/1DjRJ1m+9nfflZuLRBxmHRQtY1z9+Km4+Hr75+vmyS/lyy5++bg3w353duN32TfPHcRpb05VId6t7W4FE/b0hPgT9MfregRtBtTLx8HtzqR2LjC44/Jx08xj2/p2Ymzr97F9WXhLD0X5v/tuU82E45CgUZLr8ebGWXeCBj61sZt7Pn7ek2G0Ozvx++zDc6M40c2pKowEHVfw+D09JZ4EbamqUI6jQaGb4e26ptUw9Lj97/6O6sHLH7b/U1b/bx6r59cPVONB+aSrZgNl6a8eq7GlefunogSrLtvXx+/kqnciTmxdD1Prfn4yfLB9Nyt3bqqoxdf9Hv3QpDzOMN6dcfwo+27O/EO369HNw1UYC7pbweP29KQ4FLQ8/HXzn+hIFN0uy/Xx++ZlnVp3zR1/+Y9PjVT1Xf1Eqns7mrf/YJT2Db94GGawI2icWHhtOz8Z7cFA0DDaXTYahKDh+DHOMN6dcfwo+/bj1sYZhjxchbGguxU8bk9PikNB+0EhDD3x7a5oRTsjatUKBrx8EyJ0o17vRvmiuqLdDO9glMF70m91R9BBYuG11bi2bTc3frAiPCH8Wwta/tMeMXcyjHdnT/w2+/bj1saJbk5WYTwH3VtBvaenxZOg4UP+020YBOrdLw9Id/HtpqY/fRXegH/bVav4+K9/uY0E3bQjQxumf/snotSCjj4WOwe+QWLjt23Pg/3dkaCb7sDxsJNhvDs7WvTZ18+N4kQ3J6sw2K1DFdR7elr8Cbozau6OoCU/ffupKPqBrilvqPXz7YER9LIdLNvb+6McGkHHguYaQdtD606G8e7s0aLNvn1uGye6OVmFfYLuVJARtKUbQe8jEffPQQMv/9Lf0ZR3006Pbo6Ygx6M0p0kda8PD2yKyTno6G07OAcdChq/0eMM493Zr0Wd/WCQ225HISfmoPFu7a3gcXt6UjwJGp/GHzqLr6tTVvEf6iN0fXdowrSf/8vH0vDmJGnf+euqiN7+/VE6QbvX19uu4rYZ7Du3Hb1tB8/ih4JWJ2NfV/Oa0FUaZBjvzjh+lH13UtfGGdw8XIXd3RpW8Ng9PSkeBb146P8c9UHrKduHz9/1Twx3RDOofoof6L8N6e8JVZ+IMuqDdqcdN81T93UHx2/bzoMVu4I2TcumZTDIMN6dnfh99oM+aPOs9uZUFQa7taeCR+/pKXEo6M/Dtx71Vxe/2o5uVx28j+WQ8Kl9YrgjPgf9+Nu2Z/Onb5pvggIv/35d/OzraA56IEp3VOu+Sdo+lWckv/hDfbpbP/X7+PuVX4X0d9628YMVu4Juf/rmut3MOMNod3bjd9k3exPF6W9OVWGwW3sqePyenhA/gubGxTfJ5rz6KiDo2+bVVwFB3zavvgoI+rZ59VV4u4LCmwBBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTVpgrarib/y5fUcUUxinZ0Dkmqwrtc331ZL3d+cIpl3SPFfEyBomqAv952W63qRe1gMggpSavB8e9fe3HCQzwOCChhBbUFQQeIctBlCmYPmAkEFaTV4vg1nl4yfuUBQATWwBUEF1MAWBBXQqLcFQQU06m1BUAFtJlsQVECj3hYEFTCC2oKgAhr1tiCogEa9LQgqoAa2IKggTw34ie1cEFSQuVFPSRNBUEHmRj0lTQRBBZnbTJQ0EQQVZG7UU9JEEFTACGoLggoyN+opaSIIKsjcqKekiSCoIHMNKGkiCCpAUFsQVJBWg1V58v50XRQXD1nCAYIqkmpQ+/nFw6DhtCAcIKgkrQ9anruvrqqbtJkygaCC1EZ90wulUZ8JBBWkHeLL0XPNCJoTBBUk1eD59sPnegjdHDpLoqSJIKggsQab0Ki/yhQOEFRAH9QWBBUgqC0IKkBQWxBUgKC2IKgAQW1BUAGC2oKgAgS1BUEFCGoLggoQ1BYEFSCoLQgqQFBbEFSAoLYgqABBbUFQAYLagqACBLUFQQUIaguCChDUFgQVIKgtCCpAUFsQVICgtiCoAEFtQVABgtqCoAIEtQVBBQhqC4IKWCfJFgQVsE6SLQgqYJUPWxBUwDpJtiCogBHUFgQVsE6SLQgqYJ0kWxBUQB/UFgQVIKgtCCqgUW8Lggpo1NuCoALaTLYgqIBGvS0IKmAEtQVBBTTqbUFQAY16WxBUQB/UFgQV5KlB0ZEl3DsCQQU06m1BUAGNelsQVECbyRYEFdCotwVBBYygtiCogEa9LQgqoFFvC4IKaNTbgqACBLUFQQVpZ/HVzHNDoz4jCCpIFrQ+f48aTvPDwRZBJamCNmrSZsoEggpSBX26rgWlUZ8JBBUwgtqCoII0Qase6NW2PV1aGA62CCpJrEHp6MXD4S+SEDQVBBXQB7UFQQUIaguCChDUFgQVIKgtCCpAUFsQVICgtiCoAEFtQVABgtqCoAIEtQVBBQhqC4IKENQWBBUgqC0IKkBQWxBUgKC2IKgAQW1BUAGC2oKgAgS1BUEFCGoLggoQ1BYEFSCoLQgqQFBbEFSAoLYgqABBbUFQAYLagqACBLUFQQUs5GULggpYyMsWBBWwDI0tCCpgIS9bEFTACGoLggpYyMsWBBWwkJctCCqgD2oLggoQ1BYEFdCotwVBBTTqbUFQAW0mWxBUQKPeFgQVMILagqACGvW2IKiARr0tCCqgD2oLggry1KDoyBLuHYGgAhr1tiCogEa9LQgqoM1kC4IKaNTbgqACRlBbEFRAo94WBBXQqLcFQQU06m1BUAGC2oKggjk1eLq+O/QQJU0EQQVpbab+K03aTHlAUEFSDZqTd0bQfCCoIPUsvjp/R9B8IKigq0F5/D7Q2xywunhA0IwgqCCqwbqcWmpH18UNguYDQQXDGhzj6NN1USBoLhBUMK7BeurXnoGXewTNBoIKBjXYFNXg+HJ/8JvMtHCgQVBBX4OqyxnMPPRbuqRwcBQIKojO4svz83zh4DgQVMB38bYgqCCqwao8wB/8oWd6ODgGBBX0NVjVE9Dn26s84eAoEFQQzUFD72jBGdIWQZNBUEFXg/Y/OFoj6DlBUEFfg/AfHD1dL5qEUtJEEFQQ1aD6DrNY2GuipIkgqIA2ky0IKkBQWxBU0NdAXhgsLRwcBYIKoj7oIjN3wsFRIKgg6oMu+w5pFA6OA0EFO436TOHgOBBUEDXqF33HOQ4Hx4Gggr4Gm8O/k58TDo4CQQXxf9XJWfz5QVABfVBbEFSAoLYgqCCqQXmQv3xc8YPls4Kggugk6eJhffm4sB1KSRNBUMHg96DVlef5PehZQVDBoFFfCTr5i3oW8soNggp2RtDVxFUbWMgrOwgqGM9B1xPtepahyQ+CCoZn8dO/qGchr/wgqICFvGxBUAELedmCoIK07+JZyCs3CCoY12DZdRsQNBUEFezUYMWlb84Jggp2akCj/qwgqGCnBlNfddKozw6CCsY1mLq6HW2m/CCoYOcsfuKbThr1+UFQAY16WxBUQKPeFgQV7Dbqp07SadTnBkEF4//seOrXTEnh4CgQVBD9HjSYeWh2OR2lI1ti7wQEFfSH+C/DD+1o1J8VBBXsjKD8ov6sIKhg8Iv68t/1xC+WaTPlB0EF41/UT81AadTnB0EFNOptQVABjXpbEFSQdukbGvW5QVABl76xBUEFXPrGFgQVpF36pmYz8V/PU9JEEFSQdOmb7aoobp7+/vHwiguUNBEEFaRc+qaWdxX6+bSZ8oCgguRL3zx9UT2DRn0mEFSQUoNwhv/yv1tG0GwgqGAwB1V0Z/gHm1GUNBEEFaStNNf8lOTwkkqUNBEEFUQnSSwmawCCCljIyxYEFbBOki0IKkBQWxBUEGqQZy3uLYImg6CCSNBjGk3HhYOjQVABgtqCoAIEtQVBBQhqC4IKENQWBBUgqC2zBS2mOFv6p6cV9IhL2x0fDo5mvqDvZOSlUW8LggoQ1BYEFSCoLQgqQFBbEFSAoLYgqABBbUFQAYLagqACBLUFQQUIaguCChDUFgQVIKgtCCpAUFsQVICgtiCoIG1fWMgrNwgqSFxEgYW8MoOggpR9YRma/CCoIO3yiyzklRsEFTCC2oKggsQ5KAt5ZQZBBWn7wkJeuUFQAX1QWxBUgKC2IKiARr0tCCqgUW8LggpoM9mCoAIa9bYgqIAR1BYEFdCotwVBBTTqbUFQAX1QWxBUkGdf3uSVKc8Cggpo1NuCoAIa9bYgqIA2ky0IKqBRbwuCChhBbUFQAY16WxBUQKPeFgQV0Ki3BUEFCGoLggrS9mVdHt7raeias/g8IKgg7STp4qGchl5tETQbCCpIbzO93JenSAiaCQQVzGnUry4fETQTCCqY1ahfXSFoJhBUkDYHbbR8vj30e6a3VJqzgKCC1LP4cJB/uUfQPCCogD6oLQgqQFBbEFSAoLYgqABBbUFQAYLagqACBLUFQQUIaguCChDUFgQVIKgtCCpAUFsQVICgtiCoAEFtQVABgtqCoAIEtQVBBQhqC4IKENQWBBUgqC0IKkBQWxBUgKC2IKgAQW1BUAGC2oKgAgS1BUEFCGoLggoQ1BYEFSCoLQgqSNsXFvLKDYIK0q7NxEJeuUFQwayr27EMTTYQVDDn+qBbFvLKBoIKGEFtQVBB4hyUhbwyg6CCtH1hIa/cIKiAPqgtCCpAUFsQVECj3hYEFdCotwVBBbSZbEFQAY16WxBUwAhqC4IKaNTbgqACGvW2IKiAPqgtCCrIsy9FR5Zw7wgEFdCotwVBBTTqbUFQAW0mWxBUQKPeFgQVMILagqACGvW2IKiARr0tCCqgUW8LggoQ1BYEFSCoLQgqQFBbEFSQ1gftv3OnD5oHBBUk7cvL/cEv4eeEAwSVpP5Y5CpnOEBQReK+bIq7ycffUmnOAoIKOEmyBUEFCGoLggoQ1BYEFSCoLQgqQFBbEFSAoLYgqABBbUFQAYLagqCCcwhaTJF3+6+ONyLo5Fu8KJ2zCOqqlr54K4LO3Q0dOVeKE+F81dIXCKoi50pxIpyvWvoCQVXkXClOhPNVS18gqIqcK8WJcL5q6QsEVZFzpTgRzlctfYGgKnKuFCfC+aqlLxBURc6V4kQ4X7X0BYKqyLlSnAjnq5a+QFAVOVeKE+F81dIXCKoi50pxIpyvWvoCQVXkXClOhPNVS18gqIqcK8WJcL5q6QsEVZFzpTgRzlctfYGgKnKuFCfC+aqlLxBURc6V4kQ4X7X0BYKqyLlSnAjnq5a+QFAVOVeKE+F81dIXCKoi50pxIpyvWvoCQVXkXClOhPNVS18gqIqcK8WJcL5q6QsEVZFzpTgRzlctfYGgKnKuFCfC+aqlLxBURc6V4kQ4X7X0BYKqyLlSnAjnq5a+QFAVOVeKE+F81dIXCKoi50pxIpyvWvoCQVXkXClOhPNVS18gqIqcK8WJcL5q6QsEVZFzpTgRzlctfYGgKnKuFCfC+aqlLxBURU569sv95EqdCJoMgqrIKU9eFzfhxqa9cVQ4X7X0BYKqyAnPfbnvtFxfPh4fzlctfYGgKnLCc59vu4U6N8OD/PTVnqevDw1vnpluBnkSnnvECAqQl8Q5aDOEHpyDAuQlbfh9vg1jNuMnnIn3fpICzkFQcA2CgmsQFFyDoOAaBAXXICi4BkHBNQgKrkFQcA2CgmsMfjoI741FuuTy7txbJMzJw7hIB0EJc+o4CEqYk4RxkQ6CEubUcRCUMCcJ4yIdBCXMqeMgKGFOEsZFOghKmFPHQVDCnCSMi3T4qhNcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTXnEjRcPPxqzx9pPF1HL9wUxcXDrHTiMLOz2TT/VW134f552QzDLKjNus9lSW0GcZal02cwO51zCfr0xcOBP5LYXD6WNWvqtSl3eTPPiTjM/GwqMmQzCDM/m3WVQPdpmZ/NIM78dFZlmKfrxemcS9DBwkqbg0spCsJCOOvw8vDHasanexBmfjY1bZT52QzCLKnNVZ/AgmwGcean83xb1zgst7EgnXMJur469EcKw3G4/niuZ1RwOCzMziYkcbM0m0GY+dkMxFqQzVDQ2emE8bIZNRekcy5BV39XTmVu9v2RwubDH2+7VwbN5nzEB2HmZ1O/uN38/GwGYRZkEx+al2QzOMTPf6uCoCHOgnTOJOjzbTXWr252/0hiXa2zHD7io8/o/DDzs9m2B7Jl2QzCLMkmOhFZlE0UZ346zaAZBF2QzlnbTIsnouuL6JO4QNCLnQ/0zKGv3/oyJUYvm5VNNQq3U4Ul2cRxlqRTnyS9LkG7k7qdP44kzGKaV84/bgzCzM+mZNWtubfoEL8aLd03J5vBPG9BNnvmi/OKsyqKD3/88mFhOucVdGmvKexi88r5M+9BmPnZxIfmRSdJUZj52eQ6K9kz2s3vNT397eeF6ZxJ0JBh8xEa/JFEWBB8s7TNNAgzP5vB0LKkzRSFmZ/N4JULssn0VgVeT5upTq6dbA/+SKLa4W5V8Pnd30GY+dkMtr6gNR6/bH42g7njgmwGcWanU3/zsIlP2nw36qsZSTVhbrps8ZdySWxC1yOEWc/+Om8QZn423VcGy7IZhJmfzSpPbYZxZqdTfUlaZbAwHX4sAq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEBRcg6DgGgQF1yAouAZBwTUICq5BUHANgoJrEHTAql4Q5sBVhDZ3+2+nsbl4CFfX2+Hl/u7AIyOev1yyLsnrAkEHhCvJrvcaGstznEh7OXyRt/XVsXE3owvevmEQdEAQdOeCsjWnFrSKeWTccqydu/nXBoIOaAWtL9varm8RblSL010+Vv8Wd/Xtv375bbUYQ3N9wqcvfnPdL0By/etqGZHqaWEpgeaR6iKE37aH+OaFz7fVc+/CZWKfb/+peU2z9fqp5T/P9cbC1rfdhWHfAQg6oDnEV1e0rFZQCVdhbW5UrtRXHC7vCKNdvQLGVZgS1OsFdKvAXJf31GuJVJf+DA/fhEvDbopG0PaFz7fVc8v/VXd0f8QbrQWtNtZuffZiDa8QBB0QTpKK7gLMpQjdjcqV9mLYQdCb5nylEidck7gZ2eo/mn/uwoRhU41/9cAZInUvrB9un9b+MdhoEPQmvhT3zDUfXiEIOiCMoJviqlGg/Le7EaQMjgzmi5vqsNtczT1aw6D9J9xX3ahfG53F1y/sFbzrj+iDjUaPtobunyW/RRB0QLMezKod7jpXWkde7ovWqqBZOa388J/VCPrFeJGNTtB2NeP1QND2hQMnh4JG2oaNNVtH0HdLI+i6FXQ8goYnNQfp28jCKUG7lQRiQbunJIyg7dYR9N3SjqCXj/vnoDWNL/XftXSbop2Drto5aCRo97pmtaBoNrsZHOKjk/ZoozfDINHn4l2AoAPaOejd3rP4mzBCNt50pjzf1l2oeC3XWNDQ9191p+f9CFq/sBs5w1l880e70Zf76rMS2gbd1jmLf7fEX3WO+qDVg5ePm+bh8vZf2znoxUNp39N128HcjgWt+6D14T3ug7Yv7J2s+6Dtcb7daLWay6/bQ3y7dfqgkMryg27Ct1MLvsh6bSBoJjLMCtdHLxXId/GQSgZBj/6GnV8zATgBQcE1CAquQVBwDYKCaxAUXIOg4BoEBdcgKLgGQcE1CAquQVBwDYKCaxAUXIOg4BoEBdcgKLgGQcE1CAquQVBwDYKCa/4fgWREf+eOgloAAAAASUVORK5CYII=" /><!-- --></p>
+</div>
+<div id="bootstrap-summary-statistics-median" class="section level2">
+<h2>Bootstrap summary statistics (Median)</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>original_median <span class="ot">&lt;-</span> <span class="fu">median</span>(sleep_hours)</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>boot_mean_med <span class="ot">&lt;-</span> <span class="fu">mean</span>(boot_median_sleep)</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>boot_se_med <span class="ot">&lt;-</span> <span class="fu">sd</span>(boot_median_sleep)</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>boot_bias_med <span class="ot">&lt;-</span> boot_mean_med <span class="sc">-</span> original_median</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>boot_median_med <span class="ot">&lt;-</span> <span class="fu">median</span>(boot_median_sleep)</span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>boot_ci_med <span class="ot">&lt;-</span> <span class="fu">quantile</span>(boot_median_sleep, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a>median_summary <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>  <span class="at">Metric =</span> <span class="fu">c</span>(<span class="st">&quot;Original estimate&quot;</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>             <span class="st">&quot;Bootstrap mean&quot;</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>             <span class="st">&quot;Bootstrap SE&quot;</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>             <span class="st">&quot;Bias&quot;</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a>             <span class="st">&quot;Bootstrap median&quot;</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>             <span class="st">&quot;95% CI (2.5%)&quot;</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>             <span class="st">&quot;95% CI (97.5%)&quot;</span>),</span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fu">c</span>(original_median,</span>
+<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a>            boot_mean_med,</span>
+<span id="cb18-19"><a href="#cb18-19" tabindex="-1"></a>            boot_se_med,</span>
+<span id="cb18-20"><a href="#cb18-20" tabindex="-1"></a>            boot_bias_med,</span>
+<span id="cb18-21"><a href="#cb18-21" tabindex="-1"></a>            boot_median_med,</span>
+<span id="cb18-22"><a href="#cb18-22" tabindex="-1"></a>            boot_ci_med[<span class="dv">1</span>],</span>
+<span id="cb18-23"><a href="#cb18-23" tabindex="-1"></a>            boot_ci_med[<span class="dv">2</span>])</span>
+<span id="cb18-24"><a href="#cb18-24" tabindex="-1"></a>)</span>
+<span id="cb18-25"><a href="#cb18-25" tabindex="-1"></a></span>
+<span id="cb18-26"><a href="#cb18-26" tabindex="-1"></a>median_summary</span></code></pre></div>
+<pre><code>##              Metric     Value
+## 1 Original estimate 7.5000000
+## 2    Bootstrap mean 7.5974500
+## 3      Bootstrap SE 0.6495927
+## 4              Bias 0.0974500
+## 5  Bootstrap median 7.5000000
+## 6     95% CI (2.5%) 5.5000000
+## 7    95% CI (97.5%) 9.0000000</code></pre>
+</div>
+</div>
+<div id="percentile-bootstrap-confidence-interval" class="section level1">
+<h1>Percentile bootstrap confidence interval</h1>
+<p>Compute the lower and upper bound of the 95% percentile bootstrap
+confidence interval.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>cl95_sleep <span class="ot">&lt;-</span> <span class="fu">bootstrap_ci</span>(boot_means_sleep, <span class="at">conf_level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>cl95_sleep</span></code></pre></div>
+<pre><code>##  2.5% 97.5% 
+##   6.4   8.4</code></pre>
+</div>
+<div id="assumption-checks" class="section level1">
+<h1>Assumption checks</h1>
+<p>In this bootstrap, we do not need to check normality, but it needs
+the following assumptions:</p>
+<ul>
+<li>Independence: Observations of sleep duration should be
+independent.</li>
+<li>Representative: Observations should come from the target
+population.</li>
+<li>Sample size: Sample size n should be big enough to make
+bootstrap_ci() stable.</li>
+<li>Outliers: Outliers will effect the bootstrap_mean() and
+bootstrap_ci().</li>
+</ul>
+</div>
+<div id="checking-sample-size" class="section level1">
+<h1>Checking sample size</h1>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>sleep_sample <span class="ot">&lt;-</span> sleep_hours[<span class="sc">!</span><span class="fu">is.na</span>(sleep_hours)]</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(sleep_sample)</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="cf">if</span> (n <span class="sc">&lt;</span> <span class="dv">10</span>) {</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  <span class="fu">warning</span>(<span class="st">&quot;Sample size n is too small!&quot;</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="checking-outliers" class="section level1">
+<h1>Checking outliers</h1>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>sleep_sample <span class="ot">&lt;-</span> sleep_hours[<span class="sc">!</span><span class="fu">is.na</span>(sleep_hours)]</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>Q1 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sleep_sample, <span class="fl">0.25</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>Q3 <span class="ot">&lt;-</span> <span class="fu">quantile</span>(sleep_sample, <span class="fl">0.75</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>IQR <span class="ot">&lt;-</span> <span class="fu">IQR</span>(sleep_sample)</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>lower_tail <span class="ot">&lt;-</span> Q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>upper_tail <span class="ot">&lt;-</span> Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> IQR</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="fu">boxplot</span>(sleep_sample,</span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Boxplot of sleep duration&quot;</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Sleep duration(hours)&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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8xMSyocoNO9IESicdN6Lvy8eJ9tysYidyt79rniwp/9ysWydA30oB8j2QPM0m27SSKBw4hNotvnZcn9QE2i+jdqUMYHCic82qL09ffHY+DqMoBhK10CTm232qNi45URSdr5pdWx5IA2Bwknn46CJfQLNfn3hcuW00XScTaKmDy4RKJxwJgnSCBTSQgfa9NlPAoWTkUfQ08V6g8wOV49VPKQRKKQFCtQcJd2vWy7KI1A4CROo7fPTLReLoK8ggdrzR9nleJzqRC+BAn2wd8g5crEIegq0ijeXlDCCor8wgR42bz7YITRp2ksiUDgJdZgpyQ7HN16SR6BwwnFQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSCNQSAsU6PNjdoflxofKEyichAl0VzwnvvGB8QQKJ0ECzR9BY/CUD/QS7DlJOZ6ThF4YQSEt1DZoPoSyDYp+Au3FHzbZXnzD+EmgcMRxUEgjUEgLHeiOvXj0MfIIGpUGmR2uHqt4SCNQSAsUaJxueu7XUdT0uHgChZswgdo+P92enfTsMTssV6Bz8fdppCvzJac60Uuwi0Xy8/FcLIJeAq3i09FzxwiK/sIEeti8+WCH0KRpL4lA4STUYaYkOxy/Gmh2WCqOg0IagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUIagUJauKd82JssNzxCgUDhKFyg9vEJPCcJ/QQLNE+Tp3ygl2CB7tc2UJ6ThF4YQSEtUKDFI2iy3aWes8OChTrMlDZ6s0135Bv6JFC44TiojnStM/WPoIdAZURH3pbXQge6Yy/eUVT5E6WRR9CoNMjsrgmB1mIVr4JAaxGoDLZB63CxiA42fGpwsQikcaoT0rhYBNIYQSGNi0UgjYtFII3joJBGoJBGoJBGoJBGoJA2WaCAk4kCBYZFoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJBGoJD2f0JzUGUIoUa6AAAAAElFTkSuQmCC" /><!-- --></p>
+</div>
+<div id="bibliography" class="section level1">
+<h1>Bibliography</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-marqueze2015natural" class="csl-entry">
+Marqueze, Elaine Cristina, Suleima Vasconcelos, Johanna Garefelt, Debra
+J. Skene, Claudia Roberta Moreno, and Arne Lowden. 2015. <span>“Natural
+Light Exposure, Sleep and Depression Among Day Workers and Shiftworkers
+at Arctic and Equatorial Latitudes.”</span> <em>PLOS ONE</em> 10 (4):
+e0122078. <a href="https://doi.org/10.1371/journal.pone.0122078">https://doi.org/10.1371/journal.pone.0122078</a>.
+</div>
+</div>
+</div>
+<div id="ai-usage" class="section level1">
+<h1>AI usage</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://chatgpt.com/share/699e88bf-3d1c-8003-ac39-9186bb8e1d24" class="uri">https://chatgpt.com/share/699e88bf-3d1c-8003-ac39-9186bb8e1d24</a></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
