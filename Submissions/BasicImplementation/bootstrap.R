@@ -7,7 +7,8 @@
 #' @param bedtime Numeric vector of bedtimes.
 #' @param uptime Numeric vector of wake times.
 #'
-#' @return A numeric vector containing sleep durations (in hours).
+#' @importFrom stats median sd
+#' @return A numeric vector containing sleep duration (in hours).
 #' @export
 compute_sleep_duration <- function(bedtime, uptime) {
 
@@ -30,6 +31,7 @@ compute_sleep_duration <- function(bedtime, uptime) {
 #' @param n Size of each bootstrap sample. If NULL (default), uses the
 #'   number of non-missing observations in `x`.
 #'
+#' @importFrom stats median sd
 #' @return A numeric vector containing B bootstrap mean estimates.
 #' @export
 bootstrap_mean <- function(x, B = 1000, n = NULL) {
@@ -61,6 +63,7 @@ bootstrap_mean <- function(x, B = 1000, n = NULL) {
 #' @param n Size of each bootstrap sample. If NULL (default), uses the
 #'   number of non-missing observations in `x`.
 #'
+#' @importFrom stats median sd
 #' @return Numeric vector containing B bootstrap median estimates.
 #' @export
 bootstrap_median <- function(x, B = 1000, n = NULL) {
@@ -207,6 +210,7 @@ bootstrap_diff_mean <- function(x, group, B = 1000, n = NULL) {
 #' @param n Size of each bootstrap sample. If NULL (default), uses the
 #'   original sample sizes of each group.
 #'
+#' @importFrom stats median sd
 #' @return A numeric vector containing B bootstrap estimates of the median difference.
 #' @export
 bootstrap_diff_median <- function(x, group, B = 1000, n = NULL) {
@@ -254,6 +258,7 @@ bootstrap_diff_median <- function(x, group, B = 1000, n = NULL) {
 #' @param original Original statistic value (optional).
 #' @param conf_level Confidence level. Default is 0.95.
 #'
+#' @importFrom stats median sd
 #' @return A list containing the original estimate, bootstrap mean,
 #' standard error, and confidence interval.
 #' @export

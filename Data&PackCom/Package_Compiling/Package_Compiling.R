@@ -4,6 +4,8 @@ usethis::use_testthat(3)
 
 usethis::use_vignette("my-vignette")
 
+devtools::build_vignettes()
+
 devtools::document()
 
 devtools::check()
