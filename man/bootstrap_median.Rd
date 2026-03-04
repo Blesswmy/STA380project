@@ -4,12 +4,15 @@
 \alias{bootstrap_median}
 \title{Bootstrap median estimator}
 \usage{
-bootstrap_median(x, B = 1000)
+bootstrap_median(x, B = 1000, n = NULL)
 }
 \arguments{
 \item{x}{Numeric vector.}
 
 \item{B}{Number of bootstrap samples. Default is 1000.}
+
+\item{n}{Size of each bootstrap sample. If NULL (default), uses the
+number of non-missing observations in \code{x}.}
 }
 \value{
 Numeric vector containing B bootstrap median estimates.

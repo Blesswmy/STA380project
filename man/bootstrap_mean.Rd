@@ -11,7 +11,8 @@ bootstrap_mean(x, B = 1000, n = NULL)
 
 \item{B}{Number of bootstrap samples. Default is 1000.}
 
-\item{n}{Size of each bootstrap sample. If NULL (default), the sample}
+\item{n}{Size of each bootstrap sample. If NULL (default), uses the
+number of non-missing observations in \code{x}.}
 }
 \value{
 A numeric vector containing B bootstrap mean estimates.

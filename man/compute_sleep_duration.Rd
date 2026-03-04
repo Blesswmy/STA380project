@@ -12,7 +12,7 @@ compute_sleep_duration(bedtime, uptime)
 \item{uptime}{Numeric vector of wake times.}
 }
 \value{
-A numeric vector containing sleep durations (in hours).
+A numeric vector containing sleep duration (in hours).
 }
 \description{
 Compute sleep duration as the difference between wake time and bedtime.
