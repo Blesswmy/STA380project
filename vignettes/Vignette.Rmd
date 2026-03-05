@@ -19,7 +19,7 @@ knitr::opts_chunk$set(fig.width=7, fig.height=6)
 ```
 
 ```{r}
-source("~/Documents/STA380project/R/bootstrap.R")
+library("STA380project")
 ```
 
 This vignette demonstrates three functions for sleep duration statistics with the bootstrap resampling method:
