@@ -19,7 +19,11 @@ knitr::opts_chunk$set(fig.width=7, fig.height=6)
 ```
 
 ```{r}
-source("~/Documents/STA380project/R/bootstrap.R")
+library(STA380project)
+library(readxl)
+
+data_path <- system.file("Data&PackCom", "extdata", "README_for_Marqueze+et+al.xls", package = "STA380project")
+data <- read_excel(data_path)
 ```
 
 This vignette demonstrates three functions for sleep duration statistics with the bootstrap resampling method:
@@ -37,8 +41,8 @@ In this example, bedtimes and wake times are recorded on a 24-hour clock. If wak
 ```{r}
 set.seed(1)
 n <- 10^4
-uptime  <- c( 7.0, 6.0, 9.0, 7.5, 6.0)
-bedtime <- c(22.0, 22.5, 1.0, 0.0, 0.5)
+uptime  <- data$Uptimew
+bedtime <- data$Bedtimew
 sleep_hours <- compute_sleep_duration(bedtime, uptime)
 sleep_hours
 summary(sleep_hours)
