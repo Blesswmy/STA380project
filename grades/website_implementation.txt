@@ -1,0 +1,38 @@
+Some comments:
+
+This current format is very close to the example. The main concern here is that I would appreciate it if students took more creative liberties and attempted to do things in their own format and get used to reading some of the R shiny documentation.
+
+Instead of outputting the following:
+
+$original
+[1] 7.172105
+
+$bootstrap_mean
+[1] 7.173683
+
+$std_error
+[1] 0.1312681
+
+$conf_int
+    2.5%    97.5% 
+6.903170 7.416522 
+
+It would be nice if you could have a nicely formatted table instead.
+
+Also, please pay attention to this part of the rubric of the final implementation. If you want full marks, you may need to add more features to the website that I have not yet already stated:
+
+Additional Features (20%)
+
+    Creative extensions beyond requirements. 
+
+    Some examples: use of external packages not referenced, unique components, innovative designs, etc.
+
+Another issue is that I'm not too exactly sure of the source of the data (this could have been a long time ago). I see where you put the .xlsx file, but I don't know exactly where you got this from. It would be good to even include this in your website, and to make it explicit what the analysis is for.
+
+Regarding individual contribution: 
+
+Chunxu Hou, I noticed that your own individual account has shown no contributions but when I dove into the Git history, it appears that you have not linked your GitHub account to the console. You should do this because it's good for employers to actually see your Git history and contributions overall, and it's easier to track. (When I have interviews, I've had people look at my entire Git history.)
+
+Similarly, it appears that the user "Charlesisagoodkid" is contributing, which may be associated with Shiyu Qi's account (if I am correct. Please email me if I am wrong.) The same criticism applies.
+
+Other than that, I am not too dissatisfied by the contributions of each member.
