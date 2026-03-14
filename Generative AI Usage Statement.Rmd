@@ -1,0 +1,16 @@
+---
+title: "Generative AI Usage Statement"
+author: "Group11"
+date: "2026-03-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Generative AI Usage Statement
+
+In completing this project, we utilized generative AI tools to assist  with certain technical aspects of the development process. During the coding and debugging stages, we consulted AI for explanations and suggestions when encountering complex R error messages or when we needed clarification on the structure of specific Shiny functions and Bootstrap interface components. This was instrumental in helping us streamline our code logic and accelerate the troubleshooting process.
+
+However, the AI served primarily as a technical reference and a supplementary tool. All core elements of the project, including the data preprocessing logic, the choice of analytical methods, and the overall visual design of the Shiny application, were discussed and finalized by our team members. We manually reviewed and modified any code suggestions provided by the AI based on our own understanding to ensure that the final implementation fully met the requirements of our project.
