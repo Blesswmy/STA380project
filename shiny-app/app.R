@@ -3,7 +3,7 @@ library(bslib)
 library(shinycssloaders)
 library(readxl)
 
-source("../Submissions/BasicImplementation/bootstrap.R")
+source("../shiny-app/R/bootstrap.R")
 
 options(spinner.type = 8, spinner.color = "#6990EE")
 
