@@ -31,13 +31,13 @@ ui <- page_sidebar(
   sidebar = sidebar(
 
     numericInput("seed",
-                "Setting the seed",
+                "Insert the seed",
                 value = 1,
                 min = 1,
                 step = 1),
 
     selectInput("group",
-                "Group",
+                "Choose the group that you want to see",
                 choices = list("Depression" = "dep",
                                "No Depression" = "nodep"),
                 selected = "dep"),
@@ -77,11 +77,9 @@ ui <- page_sidebar(
 
 server <- function(input, output) {
 
-  observe({
-    set.seed(input$seed)
-  })
-
   output$bootstrap_hist <- renderPlot({
+
+    set.seed(input$seed)
 
     if (input$group == "dep") {
       x <- sleep_dep}
@@ -109,6 +107,8 @@ server <- function(input, output) {
   })
 
   output$summary_text <- renderPrint({
+
+    set.seed(input$seed)
 
     if (input$group == "dep") {
       x <- sleep_dep}
