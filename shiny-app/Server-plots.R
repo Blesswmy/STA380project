@@ -28,7 +28,7 @@ output$bootstrap_hist <- renderPlot({
 })
 
 
-output$summary_text <- renderPrint({
+output$summary_table <- renderTable({
 
   set.seed(input$seed)
 
@@ -43,11 +43,19 @@ output$summary_text <- renderPrint({
   else {bootstrap_value <- bootstrap_median(x, B = input$B)
   original_stat <- median(x)}
 
-  bootstrap_summary(bootstrap_value,
+  summary <- bootstrap_summary(bootstrap_value,
                     original = original_stat,
                     conf_level = input$conf_level)
 
-})
+  data.frame(
+    Statistic = c("Original", "Bootstrap Mean", "Standard Error", "Lower CI",
+                  "Upper CI"),
+    Value = c(summary$original, summary$bootstrap_mean,
+              summary$std_error,
+              summary$conf_int[1],
+              summary$conf_int[2])
+  )
+}, digits = 4)
 
 
 output$download_plot <- downloadHandler(

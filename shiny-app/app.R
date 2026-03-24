@@ -73,7 +73,7 @@ ui <- page_sidebar(
 
   downloadButton("download_plot", "Download Plot"),
 
-  verbatimTextOutput("summary_text")
+  tableOutput("summary_table")
 )
 
 
