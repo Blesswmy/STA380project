@@ -95,3 +95,62 @@ output$download_plot <- downloadHandler(
     dev.off()
   }
 )
+
+
+output$interpretation <- renderText({
+
+  set.seed(input$seed)
+
+  if (input$group == "dep") {
+    x <- sleep_dep
+  } else {
+    x <- sleep_nodep
+  }
+
+  if (input$stat_type == "mean") {
+    bootstrap_value <- bootstrap_mean(x, B = input$B)
+    original_stat <- mean(x)
+    stat_name <- "mean"
+  } else {
+    bootstrap_value <- bootstrap_median(x, B = input$B)
+    original_stat <- median(x)
+    stat_name <- "median"
+  }
+
+  ci <- bootstrap_ci(bootstrap_value, conf_level = input$conf_level)
+
+  paste0(
+    "With a ", input$conf_level * 100, "% confidence level, the true ",
+    stat_name, " sleep duration is estimated to be between ",
+    round(ci[1], 3), " and ", round(ci[2], 3), " hours. ",
+    "The observed ", stat_name, " is ", round(original_stat, 3), " hours."
+  )
+})
+
+
+output$data_info <- renderText({
+  paste(
+    "This dataset was obtained from the Dryad Digital Repository:",
+    "https://doi.org/10.5061/dryad.73f69.",
+    "",
+    "The data comes from a study investigating the relationship between",
+    "natural light exposure, sleep duration, and depression among workers",
+    "",
+    "The dataset includes information on sleep duration and depression status,",
+    "which are used in this application for statistical analysis."
+  )
+})
+
+
+output$purpose <- renderText({
+  paste(
+    "The purpose of this application is to explore sleep duration patterns",
+    "and estimate population statistics using bootstrap resampling.",
+    "",
+    "Users can compare groups based on depression status and compute",
+    "confidence intervals for the mean or median sleep duration.",
+    "",
+    "This helps illustrate variability in the data and provides insight",
+    "into the relationship between sleep and mental health."
+  )
+})
