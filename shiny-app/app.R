@@ -73,7 +73,18 @@ ui <- page_sidebar(
 
   downloadButton("download_plot", "Download Plot"),
 
-  tableOutput("summary_table")
+  tableOutput("summary_table"),
+
+  tags$hr(),
+
+  h4("Interpretation"),
+  textOutput("interpretation"),
+
+  h4("About the Data"),
+  verbatimTextOutput("data_info"),
+
+  h4("Purpose of Analysis"),
+  textOutput("purpose")
 )
 
 
