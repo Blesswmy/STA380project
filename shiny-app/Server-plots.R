@@ -72,7 +72,7 @@ output$download_plot <- downloadHandler(
 
     ci <- bootstrap_ci(bootstrap_value, conf_level = input$conf_level)
 
-    pdf(file, width = 8, height = 5)
+    pdf(file, width = 9, height = 5)
 
     hist(bootstrap_value, col = input$plot_color, border = "white",
          xlab = paste("Values of", stats_name),
