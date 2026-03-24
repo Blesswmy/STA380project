@@ -27,6 +27,7 @@ output$bootstrap_hist <- renderPlot({
 
 })
 
+
 output$summary_text <- renderPrint({
 
   set.seed(input$seed)
@@ -47,6 +48,7 @@ output$summary_text <- renderPrint({
                     conf_level = input$conf_level)
 
 })
+
 
 output$download_plot <- downloadHandler(
 
