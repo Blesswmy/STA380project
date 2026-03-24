@@ -81,7 +81,7 @@ ui <- page_sidebar(
   textOutput("interpretation"),
 
   h4("About the Data"),
-  verbatimTextOutput("data_info"),
+  textOutput("data_info"),
 
   h4("Purpose of Analysis"),
   textOutput("purpose")

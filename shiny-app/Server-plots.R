@@ -122,8 +122,8 @@ output$interpretation <- renderText({
   paste0(
     "With a ", input$conf_level * 100, "% confidence level, the true ",
     stat_name, " sleep duration is estimated to be between ",
-    round(ci[1], 3), " and ", round(ci[2], 3), " hours. ",
-    "The observed ", stat_name, " is ", round(original_stat, 3), " hours."
+    round(ci[1], 4), " and ", round(ci[2], 4), " hours. ",
+    "The observed ", stat_name, " is ", round(original_stat, 4), " hours."
   )
 })
 
