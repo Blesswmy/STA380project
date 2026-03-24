@@ -71,9 +71,9 @@ ui <- page_sidebar(
 
   withSpinner(plotOutput("bootstrap_hist")),
 
-  verbatimTextOutput("summary_text"),
+  downloadButton("download_plot", "Download Plot"),
 
-  downloadButton("download_plot", "Download Plot")
+  verbatimTextOutput("summary_text")
 )
 
 
