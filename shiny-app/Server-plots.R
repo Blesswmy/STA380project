@@ -25,8 +25,12 @@ output$bootstrap_hist <- renderPlot({
   abline(v = original_stat, lwd = 3, lty = 2)
   abline(v = ci[2], lwd = 2, lty = 3)
 
+  legend("topright",
+         legend = c("Lower CI", "Observed Statistic", "Upper CI"),
+         lty = c(3, 2, 3),
+         lwd = c(2, 3, 2),
+         bty = "n")
 })
-
 
 output$summary_table <- renderTable({
 
