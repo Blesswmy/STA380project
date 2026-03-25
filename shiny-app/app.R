@@ -59,11 +59,13 @@ ui <- page_sidebar(
                 value = 0.95),
 
     selectInput("plot_color",
-                "Which color would you like for you Histogram?",
+                "Which color would you like for your Histogram?",
                 choices = list("Red" = "red",
                                "Blue" = "blue",
                                "Black" = "black"),
                 selected = "blue"),
+
+    actionButton("reset", "Reset Inputs"),
 
     width = 400,
     open = "always"
@@ -73,23 +75,55 @@ ui <- page_sidebar(
 
   downloadButton("download_plot", "Download Plot"),
 
-  tableOutput("summary_table"),
+  card(
+    fill = FALSE,
+    card_header("Summary Statistics"),
+    card_body(
+      tableOutput("summary_table")
+    )
+  ),
 
-  tags$hr(),
+  card(
+    fill = FALSE,
+    card_header("Interpretation"),
+    card_body(
+      div(style = "white-space: normal; line-height: 1.6; font-size: 15px;",
+          textOutput("interpretation"))
+    )
+  ),
 
-  h4("Interpretation"),
-  textOutput("interpretation"),
+  card(
+    fill = FALSE,
+    card_header("About the Data"),
+    card_body(
+      div(style = "white-space: normal; line-height: 1.6; font-size: 15px;",
+          textOutput("data_info"))
+    )
+  ),
 
-  h4("About the Data"),
-  textOutput("data_info"),
-
-  h4("Purpose of Analysis"),
-  textOutput("purpose")
+  card(
+    fill = FALSE,
+    card_header("Purpose of Analysis"),
+    card_body(
+      div(style = "white-space: normal; line-height: 1.6; font-size: 15px;",
+          textOutput("purpose")))
+  )
 )
 
 
 server <- function(input, output, session) {
-  source(file.path("Server-plots.R"), local = TRUE)$value
+
+  observeEvent(input$reset, {
+    updateNumericInput(session, "seed", value = 1)
+    updateSelectInput(session, "group", selected = "dep")
+    updateSelectInput(session, "stat_type", selected = "mean")
+    updateNumericInput(session, "B", value = 1000)
+    updateSliderInput(session, "conf_level", value = 0.95)
+    updateSelectInput(session, "plot_color", selected = "blue")
+  })
+
+  source(("Server-plots.R"), local = TRUE)
 }
 
 shinyApp(ui = ui, server = server)
+
