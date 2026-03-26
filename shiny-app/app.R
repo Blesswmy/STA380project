@@ -86,6 +86,8 @@ ui <- page_sidebar(
   withSpinner(plotOutput("bootstrap_hist")),
 
   downloadButton("download_plot", "Download Plot"),
+  downloadButton("download_table", "Download Summary Table"),
+  downloadButton("download_bootstrap", "Download Bootstrap Values"),
 
   card(
     fill = FALSE,

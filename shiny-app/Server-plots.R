@@ -6,74 +6,135 @@ bootstrap_p_value <- function(bootstrap_value, null_value = 0) {
   min(p, 1)
 }
 
-bootstrap_results <- function() {
+bootstrap_results <- reactive({
 
-  set.seed(input$seed)
+  withProgress(message = "Running bootstrap analysis...", value = 0, {
 
-  group_label <- switch(
-    input$group,
-    "dep" = "Depression",
-    "nodep" = "No Depression",
-    "diff" = "Difference (Depression - No Depression)"
+    incProgress(0.15, detail = "Preparing data")
+
+    set.seed(input$seed)
+
+    group_label <- switch(
+      input$group,
+      "dep" = "Depression",
+      "nodep" = "No Depression",
+      "diff" = "Difference (Depression - No Depression)"
+    )
+
+    incProgress(0.35, detail = "Generating bootstrap samples")
+
+    if (input$group == "diff") {
+
+      if (input$stat_type == "mean") {
+        boot_dep <- bootstrap_mean(sleep_dep, B = input$B)
+        boot_nodep <- bootstrap_mean(sleep_nodep, B = input$B)
+        bootstrap_value <- boot_dep - boot_nodep
+        original_stat <- mean(sleep_dep) - mean(sleep_nodep)
+        stats_name <- "Mean Sleep Duration Difference"
+        stat_name <- "mean difference"
+      } else {
+        boot_dep <- bootstrap_median(sleep_dep, B = input$B)
+        boot_nodep <- bootstrap_median(sleep_nodep, B = input$B)
+        bootstrap_value <- boot_dep - boot_nodep
+        original_stat <- median(sleep_dep) - median(sleep_nodep)
+        stats_name <- "Median Sleep Duration Difference"
+        stat_name <- "median difference"
+      }
+
+    } else {
+
+      if (input$group == "dep") {
+        x <- sleep_dep
+      } else {
+        x <- sleep_nodep
+      }
+
+      if (input$stat_type == "mean") {
+        bootstrap_value <- bootstrap_mean(x, B = input$B)
+        original_stat <- mean(x)
+        stats_name <- paste("Mean Sleep Duration -", group_label)
+        stat_name <- "mean"
+      } else {
+        bootstrap_value <- bootstrap_median(x, B = input$B)
+        original_stat <- median(x)
+        stats_name <- paste("Median Sleep Duration -", group_label)
+        stat_name <- "median"
+      }
+    }
+
+    incProgress(0.25, detail = "Computing confidence interval and p-value")
+
+    ci <- bootstrap_ci(bootstrap_value, conf_level = input$conf_level)
+
+    if (input$group == "diff") {
+      p_value <- bootstrap_p_value(bootstrap_value, null_value = 0)
+    } else {
+      p_value <- NA
+    }
+
+    incProgress(0.25, detail = "Finalizing output")
+
+    list(
+      bootstrap_value = bootstrap_value,
+      original_stat = original_stat,
+      stats_name = stats_name,
+      stat_name = stat_name,
+      ci = ci,
+      group_label = group_label,
+      p_value = p_value
+    )
+  })
+})
+
+
+summary_results <- reactive({
+
+  res <- bootstrap_results()
+
+  summary <- bootstrap_summary(
+    res$bootstrap_value,
+    original = res$original_stat,
+    conf_level = input$conf_level
   )
 
   if (input$group == "diff") {
-
-    if (input$stat_type == "mean") {
-      boot_dep <- bootstrap_mean(sleep_dep, B = input$B)
-      boot_nodep <- bootstrap_mean(sleep_nodep, B = input$B)
-      bootstrap_value <- boot_dep - boot_nodep
-      original_stat <- mean(sleep_dep) - mean(sleep_nodep)
-      stats_name <- "Mean Sleep Duration Difference"
-      stat_name <- "mean difference"
-    } else {
-      boot_dep <- bootstrap_median(sleep_dep, B = input$B)
-      boot_nodep <- bootstrap_median(sleep_nodep, B = input$B)
-      bootstrap_value <- boot_dep - boot_nodep
-      original_stat <- median(sleep_dep) - median(sleep_nodep)
-      stats_name <- "Median Sleep Duration Difference"
-      stat_name <- "median difference"
-    }
-
+    data.frame(
+      Statistic = c(
+        "Original",
+        "Bootstrap Mean",
+        "Standard Error",
+        "Lower CI",
+        "Upper CI",
+        "Bootstrap p-value"
+      ),
+      Value = c(
+        summary$original,
+        summary$bootstrap_mean,
+        summary$std_error,
+        summary$conf_int[1],
+        summary$conf_int[2],
+        res$p_value
+      )
+    )
   } else {
-
-    if (input$group == "dep") {
-      x <- sleep_dep
-    } else {
-      x <- sleep_nodep
-    }
-
-    if (input$stat_type == "mean") {
-      bootstrap_value <- bootstrap_mean(x, B = input$B)
-      original_stat <- mean(x)
-      stats_name <- paste("Mean Sleep Duration -", group_label)
-      stat_name <- "mean"
-    } else {
-      bootstrap_value <- bootstrap_median(x, B = input$B)
-      original_stat <- median(x)
-      stats_name <- paste("Median Sleep Duration -", group_label)
-      stat_name <- "median"
-    }
+    data.frame(
+      Statistic = c(
+        "Original",
+        "Bootstrap Mean",
+        "Standard Error",
+        "Lower CI",
+        "Upper CI"
+      ),
+      Value = c(
+        summary$original,
+        summary$bootstrap_mean,
+        summary$std_error,
+        summary$conf_int[1],
+        summary$conf_int[2]
+      )
+    )
   }
-
-  ci <- bootstrap_ci(bootstrap_value, conf_level = input$conf_level)
-
-  if (input$group == "diff") {
-    p_value <- bootstrap_p_value(bootstrap_value, null_value = 0)
-  } else {
-    p_value <- NA
-  }
-
-  list(
-    bootstrap_value = bootstrap_value,
-    original_stat = original_stat,
-    stats_name = stats_name,
-    stat_name = stat_name,
-    ci = ci,
-    group_label = group_label,
-    p_value = p_value
-  )
-}
+})
 
 
 output$bootstrap_hist <- renderPlot({
@@ -103,39 +164,7 @@ output$bootstrap_hist <- renderPlot({
 
 
 output$summary_table <- renderTable({
-
-  res <- bootstrap_results()
-
-  summary <- bootstrap_summary(
-    res$bootstrap_value,
-    original = res$original_stat,
-    conf_level = input$conf_level
-  )
-
-  if (input$group == "diff") {
-    data.frame(
-      Statistic = c("Original", "Bootstrap Mean", "Standard Error", "Lower CI", "Upper CI", "Bootstrap p-value"),
-      Value = c(
-        summary$original,
-        summary$bootstrap_mean,
-        summary$std_error,
-        summary$conf_int[1],
-        summary$conf_int[2],
-        res$p_value
-      )
-    )
-  } else {
-    data.frame(
-      Statistic = c("Original", "Bootstrap Mean", "Standard Error", "Lower CI", "Upper CI"),
-      Value = c(
-        summary$original,
-        summary$bootstrap_mean,
-        summary$std_error,
-        summary$conf_int[1],
-        summary$conf_int[2]
-      )
-    )
-  }
+  summary_results()
 }, digits = 4)
 
 
@@ -172,6 +201,38 @@ output$download_plot <- downloadHandler(
     )
 
     dev.off()
+  }
+)
+
+
+output$download_table <- downloadHandler(
+
+  filename = function() {
+    paste0("summary_table_", input$group, "_", input$stat_type, ".csv")
+  },
+
+  content = function(file) {
+    write.csv(summary_results(), file, row.names = FALSE)
+  }
+)
+
+
+output$download_bootstrap <- downloadHandler(
+
+  filename = function() {
+    paste0("bootstrap_values_", input$group, "_", input$stat_type, ".csv")
+  },
+
+  content = function(file) {
+
+    res <- bootstrap_results()
+
+    bootstrap_df <- data.frame(
+      Bootstrap_Iteration = seq_along(res$bootstrap_value),
+      Bootstrap_Value = res$bootstrap_value
+    )
+
+    write.csv(bootstrap_df, file, row.names = FALSE)
   }
 )
 
