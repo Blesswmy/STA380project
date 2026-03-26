@@ -39,8 +39,11 @@ ui <- page_sidebar(
     selectInput("group",
                 "Choose the group that you want to see",
                 choices = list("Depression" = "dep",
-                               "No Depression" = "nodep"),
+                               "No Depression" = "nodep",
+                               "Difference (Depression - No Depression)" = "diff"),
                 selected = "dep"),
+
+    helpText("For the difference option, the app computes Depression - No Depression."),
 
     selectInput("stat_type",
                 "Statistic to Bootstrap",
