@@ -1,3 +1,11 @@
+bootstrap_p_value <- function(bootstrap_value, null_value = 0) {
+  p <- 2 * min(
+    mean(bootstrap_value <= null_value),
+    mean(bootstrap_value >= null_value)
+  )
+  min(p, 1)
+}
+
 bootstrap_results <- function() {
 
   set.seed(input$seed)
@@ -50,13 +58,20 @@ bootstrap_results <- function() {
 
   ci <- bootstrap_ci(bootstrap_value, conf_level = input$conf_level)
 
+  if (input$group == "diff") {
+    p_value <- bootstrap_p_value(bootstrap_value, null_value = 0)
+  } else {
+    p_value <- NA
+  }
+
   list(
     bootstrap_value = bootstrap_value,
     original_stat = original_stat,
     stats_name = stats_name,
     stat_name = stat_name,
     ci = ci,
-    group_label = group_label
+    group_label = group_label,
+    p_value = p_value
   )
 }
 
@@ -97,16 +112,30 @@ output$summary_table <- renderTable({
     conf_level = input$conf_level
   )
 
-  data.frame(
-    Statistic = c("Original", "Bootstrap Mean", "Standard Error", "Lower CI", "Upper CI"),
-    Value = c(
-      summary$original,
-      summary$bootstrap_mean,
-      summary$std_error,
-      summary$conf_int[1],
-      summary$conf_int[2]
+  if (input$group == "diff") {
+    data.frame(
+      Statistic = c("Original", "Bootstrap Mean", "Standard Error", "Lower CI", "Upper CI", "Bootstrap p-value"),
+      Value = c(
+        summary$original,
+        summary$bootstrap_mean,
+        summary$std_error,
+        summary$conf_int[1],
+        summary$conf_int[2],
+        res$p_value
+      )
     )
-  )
+  } else {
+    data.frame(
+      Statistic = c("Original", "Bootstrap Mean", "Standard Error", "Lower CI", "Upper CI"),
+      Value = c(
+        summary$original,
+        summary$bootstrap_mean,
+        summary$std_error,
+        summary$conf_int[1],
+        summary$conf_int[2]
+      )
+    )
+  }
 }, digits = 4)
 
 
@@ -159,6 +188,8 @@ output$interpretation <- renderText({
       round(res$ci[1], 4), " and ", round(res$ci[2], 4), " hours. ",
       "The observed ", res$stat_name, " is ",
       round(res$original_stat, 4), " hours. ",
+      "The bootstrap p-value for testing no difference is ",
+      round(res$p_value, 4), ". ",
       "A negative value means the Depression group slept less than the No Depression group."
     )
   } else {
