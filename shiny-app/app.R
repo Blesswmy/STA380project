@@ -91,6 +91,17 @@ ui <- page_sidebar(
 
   card(
     fill = FALSE,
+    card_header("Results Summary"),
+    card_body(
+      div(
+        style = "white-space: normal; line-height: 1.6; font-size: 15px;",
+        uiOutput("results_summary")
+      )
+    )
+  ),
+
+  card(
+    fill = FALSE,
     card_header("Summary Statistics"),
     card_body(
       tableOutput("summary_table")

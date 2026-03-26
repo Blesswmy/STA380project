@@ -167,6 +167,45 @@ output$summary_table <- renderTable({
   summary_results()
 }, digits = 4)
 
+output$results_summary <- renderUI({
+
+  res <- bootstrap_results()
+
+  ci_text <- paste0("[", round(res$ci[1], 4), ", ", round(res$ci[2], 4), "]")
+
+  if (input$group == "diff") {
+
+    significance_text <- if (res$ci[1] <= 0 && res$ci[2] >= 0) {
+      "The confidence interval includes 0, so the difference may not be statistically significant."
+    } else {
+      "The confidence interval does not include 0, so the difference may be statistically significant."
+    }
+
+    tagList(
+      tags$p(tags$strong("Observed statistic: "), round(res$original_stat, 4)),
+      tags$p(tags$strong("Confidence interval: "), ci_text),
+      tags$p(tags$strong("Bootstrap p-value: "), round(res$p_value, 4)),
+      tags$p(tags$strong("Sample sizes: "),
+             paste0("Depression = ", length(sleep_dep),
+                    ", No Depression = ", length(sleep_nodep))),
+      tags$p(tags$strong("Interpretation: "), significance_text),
+      tags$p(tags$strong("Method note: "),
+             "Sleep duration was corrected for overnight sleep across midnight.")
+    )
+
+  } else {
+
+    group_n <- if (input$group == "dep") length(sleep_dep) else length(sleep_nodep)
+
+    tagList(
+      tags$p(tags$strong("Observed statistic: "), round(res$original_stat, 4)),
+      tags$p(tags$strong("Confidence interval: "), ci_text),
+      tags$p(tags$strong("Sample size: "), group_n),
+      tags$p(tags$strong("Method note: "),
+             "Sleep duration was corrected for overnight sleep across midnight.")
+    )
+  }
+})
 
 output$download_plot <- downloadHandler(
 
