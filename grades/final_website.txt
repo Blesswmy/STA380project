@@ -1,0 +1,19 @@
+I think it looks good. I'd suggest the following:
+
+the current colours are kind of harsh on the eyes, so I would've picked a different set by default.
+
+As well as the observed statistic on the graph and the lower/upper CI, I would've added values.
+
+I would've added a larger description about what the "depression" and "no depression" group actually means in this case, and make the title more appropriate.
+
+I would actually give the insights regarding the relationship between sleep and mental health explicitly.
+
+Grade:
+Additional Features (-10%)
+You did add some features but it's not necessarily anything that is significantly different from my website example, and neither do I see anything that innovative.
+
+Group mark:
+> 70/80 * 6.4
+[1] 5.6
+
+Individual grades are private and will be released later when posted on Quercus. Bonus marks, if applicable, are reflected on Quercus instead of feedback here.
