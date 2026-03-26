@@ -11,8 +11,17 @@ data <- read_excel("../Data&PackCom/extdata/Marqueze+et+al.xls")
 
 data <- na.omit(data)
 
-weekday_sleep <- data$Uptimew - data$Bedtimew
-weekend_sleep <- data$Uptimef - data$Bedtimef
+weekday_sleep <- ifelse(
+  data$Uptimew >= data$Bedtimew,
+  data$Uptimew - data$Bedtimew,
+  data$Uptimew + 24 - data$Bedtimew
+)
+
+weekend_sleep <- ifelse(
+  data$Uptimef >= data$Bedtimef,
+  data$Uptimef - data$Bedtimef,
+  data$Uptimef + 24 - data$Bedtimef
+)
 
 sleep_duration <- (weekday_sleep * 5 + weekend_sleep * 2) / 7
 
